@@ -1,4 +1,4 @@
-rom datetime import date
+from datetime import date
 from flask import Flask, flash, redirect, render_template, request, url_for
 from dotenv import load_dotenv
 import mysql.connector
@@ -13,6 +13,7 @@ from algorithms.sorting import sort_markets_by_price
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.config["SESSION_COOKIE_NAME"] = "farmer_session"
 
 
 def get_connection():
@@ -177,6 +178,5 @@ def health():
     except Error as error:
         return {"status": "error", "database": str(error)}, 503
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, host="0.0.0.0", port=5000)
